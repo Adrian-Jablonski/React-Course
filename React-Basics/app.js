@@ -10,19 +10,23 @@
 const players = [
     {
         name: "Adrian",
-        score: 20
+        score: 20,
+        id: 1
     },
     {
         name: "Player2",
-        score: 3
+        score: 3,
+        id: 2
     },
     {
         name: "Player3",
-        score: 8
+        score: 8,
+        id: 3
     },
     {
         name: "Player4",
-        score: 12
+        score: 12,
+        id: 4
     }
 ]
 
@@ -69,7 +73,9 @@ const App = (props) => {
             {props.initialPlayers.map(player => 
                 <Player 
                     name={player.name}
-                    score={player.score}>
+                    score={player.score}
+                    key={player.id.toString()}     // Key must be a unique value like a primary key in a database. Key is required to be a string
+                    >
                 </Player>
             )}
             {/* <Player name="Adrian" score={20}></Player>
