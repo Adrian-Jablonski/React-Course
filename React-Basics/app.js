@@ -7,6 +7,25 @@
 //     );
 // }
 
+const players = [
+    {
+        name: "Adrian",
+        score: 20
+    },
+    {
+        name: "Player2",
+        score: 3
+    },
+    {
+        name: "Player3",
+        score: 8
+    },
+    {
+        name: "Player4",
+        score: 12
+    }
+]
+
 // Arrow function Component version using implicit return without curly braces and return
 const Header = (props) => {
     console.log(props);
@@ -41,20 +60,26 @@ const Counter = (prop) => {
     )
 }
 
-const App = () => {
+const App = (props) => {
     return (
         <div className="scoreboard">
-            <Header title="Scoreboard" totalPlayers={1}></Header>
+            <Header title="Scoreboard" totalPlayers={props.initialPlayers.length}></Header>
 
             {/* Players list */}
-            <Player name="Adrian" score={20}></Player>
+            {props.initialPlayers.map(player => 
+                <Player 
+                    name={player.name}
+                    score={player.score}>
+                </Player>
+            )}
+            {/* <Player name="Adrian" score={20}></Player>
             <Player name="Player2" score={2}></Player>
-            <Player name="Player3" score={10}></Player>
+            <Player name="Player3" score={10}></Player> */}
         </div>
     )
 }
 
 ReactDOM.render(
-    <App />,
+    <App initialPlayers={players} />,   // Passing array of players to app
     document.getElementById('root')
 );
