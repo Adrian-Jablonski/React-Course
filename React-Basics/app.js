@@ -7,29 +7,6 @@
 //     );
 // }
 
-const players = [
-    {
-        name: "Adrian",
-        score: 20,
-        id: 1
-    },
-    {
-        name: "Player2",
-        score: 3,
-        id: 2
-    },
-    {
-        name: "Player3",
-        score: 8,
-        id: 3
-    },
-    {
-        name: "Player4",
-        score: 12,
-        id: 4
-    }
-]
-
 // Arrow function Component version using implicit return without curly braces and return
 const Header = (props) => {
     console.log(props);
@@ -41,15 +18,16 @@ const Header = (props) => {
     )
 }
 
-const Player = (prop) => {
+const Player = (props) => {
     return (
         <div className="player">
             <span className="player-name">
-                {prop.name}
+                <button className="remove-player" onClick={ () => props.removePlayer(props.id)}>x</button>
+                {props.name}
             </span>
 
             {/* Player component passing score prop to Counter */}
-            <Counter score={prop.score}/>
+            <Counter score={props.score}/>
         </div>
     )
 }
@@ -78,7 +56,7 @@ class Counter extends React.Component {
     // }
 
     // Option 2. Setting up state without constructor and super
-    state = {
+    state = {   // Local Component State not shared outside of the component
         score: 0
     }
 
@@ -92,7 +70,7 @@ class Counter extends React.Component {
     }
 
     decrementScore() {
-        this.setState( prevState => {
+        this.setState( prevState => {   //Using prevState callback to make sure state updated correctly
             return {
                 score: prevState.score - 1
             }
@@ -118,28 +96,63 @@ class Counter extends React.Component {
     }
 }
 
-const App = (props) => {
-    return (
-        <div className="scoreboard">
-            <Header title="Scoreboard" totalPlayers={props.initialPlayers.length}></Header>
+const players = [
+    {
+        name: "Adrian",
+        id: 1
+    },
+    {
+        name: "Player2",
+        id: 2
+    },
+    {
+        name: "Player3",
+        id: 3
+    },
+    {
+        name: "Player4",
+        id: 4
+    }
+]
 
-            {/* Players list */}
-            {props.initialPlayers.map(player => 
-                <Player 
-                    name={player.name}
-                    score={player.score}
-                    key={player.id.toString()}     // Key must be a unique value like a primary key in a database. Key is required to be a string
-                    >
-                </Player>
-            )}
-            {/* <Player name="Adrian" score={20}></Player>
-            <Player name="Player2" score={2}></Player>
-            <Player name="Player3" score={10}></Player> */}
-        </div>
-    )
+class App extends React.Component {
+
+    state = {   // Application state available to all components
+        players: players
+    };
+
+    handleRemovePlayer = (id) => {
+        this.setState( prevState => {
+            return {
+                players: prevState.players.filter(p => p.id !== id) // Filters out player whose id is not equal to the id passed in
+            }
+        })
+    }
+
+    render() {
+        return (
+            <div className="scoreboard">
+                <Header title="Scoreboard" totalPlayers={this.state.players.length}></Header>
+    
+                {/* Players list */}
+                {this.state.players.map(player => 
+                    <Player 
+                        name={player.name}
+                        id={player.id}
+                        key={player.id.toString()}     // Key must be a unique value like a primary key in a database. Key is required to be a string
+                        removePlayer = {this.handleRemovePlayer}
+                        >
+                    </Player>
+                )}
+                {/* <Player name="Adrian" score={20}></Player>
+                <Player name="Player2" score={2}></Player>
+                <Player name="Player3" score={10}></Player> */}
+            </div>
+        )
+    }
 }
 
 ReactDOM.render(
-    <App initialPlayers={players} />,   // Passing array of players to app
+    <App />,   // Passing array of players to app
     document.getElementById('root')
 );
