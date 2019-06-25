@@ -8,6 +8,6 @@ function Header() { // React components are required to begin with a capital let
 }
 
 ReactDOM.render(
-    header,
+    <Header />,
     document.getElementById('root')
 );
