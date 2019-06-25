@@ -83,15 +83,32 @@ class Counter extends React.Component {
     }
 
     incrementScore() {
-        console.log("Increment score");
+        // this is only usable inside the method if 'this' was binded to the onclick event
+        this.setState({
+            score: this.state.score + 1
+        });    // Tells react when state changes so that react can rerender component
+    }
+
+    decrementScore() {
+        this.setState({
+            score: this.state.score - 1
+        }); 
     }
 
     render() {
         return (
             <div className="counter">
-                <button className="counter-action decrement"> - </button>
+
+                {/* Binding method 1 with bind(this) */}
+                <button className="counter-action decrement" onClick={this.decrementScore.bind(this)}> - </button>
                 <span className="counter-score">{this.state.score}</span>
-                <button className="counter-action increment" onClick={this.incrementScore}> + </button>
+
+                {/* Binding method 2 with arrow functions*/}
+                <button className="counter-action increment" onClick={() => this.incrementScore()}> + </button>
+                
+                
+
+
             </div>
         )
     }
