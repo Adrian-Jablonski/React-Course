@@ -68,11 +68,25 @@ const Player = (prop) => {
 
 // Class Component. Used when you want to use states
 class Counter extends React.Component {
+
+    // // Option 1. Setting up state using constructor and super
+    // constructor() {
+    //     super()
+    //     this.state = {
+    //         score: 0
+    //     };
+    // }
+
+    // Option 2. Setting up state without constructor and super
+    state = {
+        score: 0
+    }
+
     render() {
         return (
             <div className="counter">
                 <button className="counter-action decrement"> - </button>
-                <span className="counter-score">{this.props.score}</span>
+                <span className="counter-score">{this.state.score}</span>
                 <button className="counter-action increment"> + </button>
             </div>
         )
