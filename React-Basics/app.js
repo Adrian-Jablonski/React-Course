@@ -84,14 +84,18 @@ class Counter extends React.Component {
 
     incrementScore() {
         // this is only usable inside the method if 'this' was binded to the onclick event
-        this.setState({
-            score: this.state.score + 1
+        this.setState( prevState =>  {
+            return {
+                score: prevState.score + 1
+            }
         });    // Tells react when state changes so that react can rerender component
     }
 
     decrementScore() {
-        this.setState({
-            score: this.state.score - 1
+        this.setState( prevState => {
+            return {
+                score: prevState.score - 1
+            }
         }); 
     }
 
