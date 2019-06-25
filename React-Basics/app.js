@@ -8,12 +8,15 @@
 // }
 
 // Arrow function Component version using implicit return without curly braces and return
-const Header = () => (
-    <header>
-        <h1>Scoreboard</h1>
-        <span className="stats">Players: 1</span>
-    </header>
-);
+const Header = (props) => {
+    console.log(props);
+    return (
+        <header>
+            <h1>{props.title}</h1>
+            <span className="stats">Players: {props.totalPlayers}</span>
+        </header>
+    )
+}
 
 const Player = () => {
     return (
@@ -38,7 +41,7 @@ const Counter = () => {
 const App = () => {
     return (
         <div className="scoreboard">
-            <Header></Header>
+            <Header title="Scoreboard" totalPlayers={1}></Header>
 
             {/* Players list */}
             <Player></Player>

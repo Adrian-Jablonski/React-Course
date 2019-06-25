@@ -56,3 +56,9 @@ ReactDOM.render(
     header,
     document.getElementById('root')
 );
+
+
+// Using Props
+// Props - A list of properties used to pass data to a component. Components are customized and made reusable with props. Two steps to use props
+// 1. Define the props in a component's JSX tag
+// 2. Enable the use of props in a component
