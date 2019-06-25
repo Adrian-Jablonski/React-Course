@@ -54,14 +54,29 @@ const Player = (prop) => {
     )
 }
 
-const Counter = (prop) => {
-    return (
-        <div className="counter">
-            <button className="counter-action decrement"> - </button>
-            <span className="counter-score">{prop.score}</span>
-            <button className="counter-action increment"> + </button>
-        </div>
-    )
+// // Stateless Functional component - Best to use functions when the component is receiving props
+// const Counter = (props) => {
+//     return (
+//         <div className="counter">
+//             <button className="counter-action decrement"> - </button>
+//             <span className="counter-score">{props.score}</span>
+//             <button className="counter-action increment"> + </button>
+//         </div>
+//     )
+// }
+
+
+// Class Component. Used when you want to use states
+class Counter extends React.Component {
+    render() {
+        return (
+            <div className="counter">
+                <button className="counter-action decrement"> - </button>
+                <span className="counter-score">{this.props.score}</span>
+                <button className="counter-action increment"> + </button>
+            </div>
+        )
+    }
 }
 
 const App = (props) => {
