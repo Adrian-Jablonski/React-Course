@@ -18,21 +18,24 @@ const Header = (props) => {
     )
 }
 
-const Player = () => {
+const Player = (prop) => {
     return (
         <div className="player">
             <span className="player-name">
-                Adrian
+                {prop.name}
             </span>
+
+            {/* Player component passing score prop to Counter */}
+            <Counter score={prop.score}/>
         </div>
     )
 }
 
-const Counter = () => {
+const Counter = (prop) => {
     return (
         <div className="counter">
             <button className="counter-action decrement"> - </button>
-            <span className="counter-score">35</span>
+            <span className="counter-score">{prop.score}</span>
             <button className="counter-action increment"> + </button>
         </div>
     )
@@ -44,7 +47,9 @@ const App = () => {
             <Header title="Scoreboard" totalPlayers={1}></Header>
 
             {/* Players list */}
-            <Player></Player>
+            <Player name="Adrian" score={20}></Player>
+            <Player name="Player2" score={2}></Player>
+            <Player name="Player3" score={10}></Player>
         </div>
     )
 }
