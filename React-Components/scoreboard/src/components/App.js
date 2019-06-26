@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; // Adding {Component} allows class to extend Component instead of React.Component
 import Header from './Header';
 import Player from './Player';
+import AddPlayerForm from './AddPlayerForm';
 
 class App extends Component {
   state = {
@@ -62,6 +63,7 @@ class App extends Component {
             removePlayer={this.handleRemovePlayer}
           />
         )}
+        <AddPlayerForm></AddPlayerForm>
       </div>
     );
   }
