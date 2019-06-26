@@ -1,4 +1,4 @@
-import React, {Component} from 'react'; // Adding {Component} allows class to extend Component instead of React.Component
+import React, { Component } from 'react'; // Adding {Component} allows class to extend Component instead of React.Component
 import Header from './Header';
 import Player from './Player';
 
@@ -28,8 +28,15 @@ class App extends Component {
     ]
   };
 
+  handleScoreChange = (delta) => {
+    // this.setState(prevState => ({
+    //   score: prevState.score + 1
+    // }));
+    console.log(delta);
+  }
+
   handleRemovePlayer = (id) => {
-    this.setState( prevState => {
+    this.setState(prevState => {
       return {
         players: prevState.players.filter(p => p.id !== id)
       };
@@ -39,19 +46,20 @@ class App extends Component {
   render() {
     return (
       <div className="scoreboard">
-        <Header 
-          title="Scoreboard" 
-          totalPlayers={this.state.players.length} 
+        <Header
+          title="Scoreboard"
+          totalPlayers={this.state.players.length}
         />
-  
+
         {/* Players list */}
-        {this.state.players.map( player =>
-          <Player 
+        {this.state.players.map(player =>
+          <Player
             name={player.name}
             score={player.score}
             id={player.id}
-            key={player.id.toString()} 
-            removePlayer={this.handleRemovePlayer}           
+            key={player.id.toString()}
+            changeScore= {this.handleScoreChange}   // Passing handleScoreChage method to Player component
+            removePlayer={this.handleRemovePlayer}
           />
         )}
       </div>
