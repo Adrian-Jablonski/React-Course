@@ -1,4 +1,5 @@
 import React from 'react'; 
+import PropTypes from 'prop-types';
 
 const Counter = ({index, score, changeScore}) => {  // Extracting values from props object
 
@@ -11,6 +12,13 @@ const Counter = ({index, score, changeScore}) => {  // Extracting values from pr
         </div>
     );
 
+}
+
+// Used to check proptypes and give better warnings in the console if something is wrong
+Counter.protoTypes = {
+    index: PropTypes.number,
+    score: PropTypes.number,
+    changeScore: PropTypes.func
 }
 
 export default Counter;
