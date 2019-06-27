@@ -39,15 +39,17 @@ class App extends Component {
   }
 
   handleAddPlayer = (name) => {
-    this.setState({
-      players: [
-        ...this.state.players, // Brings in all existing players from players array and merges to new array
-        {
-          name: name,
-          score: 0,
-          id: this.prevPlayerId += 1
-        }
-      ]
+    this.setState( prevState => {
+      return {
+        players: [
+          ...prevState.players, // Brings in all existing players from players array and merges to new array
+          {
+            name: name,
+            score: 0,
+            id: this.prevPlayerId += 1
+          }
+        ]
+      }
     })
   }
 
