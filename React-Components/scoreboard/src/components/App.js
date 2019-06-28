@@ -62,7 +62,13 @@ class App extends Component {
   }
 
   render() {
+    let maxScore = 0;
+    this.state.players.forEach((player) => {
+      maxScore = (player.score > maxScore) ? player.score : maxScore;
+    })
+
     return (
+
       <div className="scoreboard">
         <Header
           title="Scoreboard"
@@ -79,6 +85,7 @@ class App extends Component {
             index = {index}
             changeScore= {this.handleScoreChange}   // Passing handleScoreChage method to Player component
             removePlayer={this.handleRemovePlayer}
+            maxScore={maxScore}
           />
         )}
         <AddPlayerForm addPlayer={this.handleAddPlayer}></AddPlayerForm>
