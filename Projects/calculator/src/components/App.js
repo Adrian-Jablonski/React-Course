@@ -20,6 +20,9 @@ class App extends Component {
       case 'operator-button':
         this.performOperation(buttonText);
         break;
+      case 'action-button':
+        this.performAction(buttonText);
+        break;
       default:
         break;
     }
@@ -41,6 +44,29 @@ class App extends Component {
       let lastInput = prevState.input.substring(inputLen - 1);
       let isOperator = (lastInput === '+' || lastInput === '-' || lastInput === '/' || lastInput === "*");
       let ans = (isOperator) ? prevState.input.substring(0, inputLen - 1) + operator : prevState.input + operator;
+      return {
+        answer: ans,
+        input: ans
+      }
+    })
+  }
+
+  performAction(action) {
+    this.setState(prevState => { 
+      let ans;
+      let inputLen = prevState.input.length;
+      console.log(inputLen)
+      if (action === "Back" && inputLen > 1) {
+        console.log(prevState.input)
+        ans = prevState.input.substring(0, inputLen - 1);
+        console.log(ans);
+      }
+      else if (action === "Clear") {
+        ans = 0;
+      }
+      else {
+        ans = 0;
+      }
       return {
         answer: ans,
         input: ans
