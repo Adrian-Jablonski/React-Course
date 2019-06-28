@@ -1,0 +1,13 @@
+#calculator {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.numeric-button, .operator-button {
+    height: 50px;
+    width: 50px;
+}
+
+.operator-button {
+    background-color: red;
+}
