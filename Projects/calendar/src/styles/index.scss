@@ -1,0 +1,32 @@
+$calendar-width : 700px;
+
+#month-name {
+    text-align: center;
+}
+
+#calendar {
+    width: $calendar-width;
+}
+
+.day {
+    border: 1px solid black;
+    width: $calendar-width / 7;
+    height: 90px;
+    padding-top: 5px;
+    padding-right: 5px;
+    text-align: right;
+    vertical-align: top;
+}
+
+.month {
+    border-spacing: 0px;
+}
+
+.calendar-table-header {
+    height: 30px;
+    background-color: lightblue;
+}
+
+.calendar-table-header th {
+    border: 2px solid black;
+}
