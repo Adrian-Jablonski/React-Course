@@ -46,6 +46,20 @@ class App extends Component {
     this.toggleGuestPropertyAt("isEditing", index);
   }
 
+  setNameAt = (name, indexToChange) => {
+    this.setState({
+      guests: this.state.guests.map((guest, index) => {
+        if (index === indexToChange) {
+          return {
+            ...guest,   // using spread operator to transfer unchanged key values to new object
+            name
+          }
+        }
+        return guest;
+      })
+    })
+  }
+
   getTotalInvited = () => {
     return this.state.guests.length;
   }
@@ -91,6 +105,7 @@ class App extends Component {
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt}
             toggleEditingAt={this.toggleEditingAt}
+            setNameAt={this.setNameAt}
           ></GuestList>
         </div>
       </div>
