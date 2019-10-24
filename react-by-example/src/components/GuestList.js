@@ -12,6 +12,7 @@ const GuestList = props => {
                         key={index}
                         name={guest.name}
                         isConfirmed={guest.isConfirmed}
+                        handleConfirmation={() => props.toggleConfirmationAt(index)}    // closure function
                     ></Guest>
                 )
             })}
@@ -20,7 +21,8 @@ const GuestList = props => {
 }
 
 GuestList.propTypes = {
-    guests: PropTypes.array.isRequired
+    guests: PropTypes.array.isRequired,
+    toggleConfirmationAt: PropTypes.func.isRequired
 }
 
 export default GuestList;
