@@ -7,7 +7,8 @@ import GifList from './Components/GifList';
 export default class App extends Component {
 
   state = {
-    gifs: []
+    gifs: [],
+    loading: true
   }
 
   // // Fetch API example
@@ -24,22 +25,15 @@ export default class App extends Component {
 
   // Axios API Example
   componentDidMount() {
-    axios.get('http://api.giphy.com/v1/gifs/trending?api_key=dc6zaTOxFJmzC')
-      .then((response) => {
-        return this.setState({
-          gifs: response.data.data
-        })
-      })
-      .catch((error) => {
-        console.log('Error fetching and parsing data', error);
-      });
+    this.performSearch();
   }
 
-  performSearch = (query) => {
+  performSearch = (query = 'cats') => {
     axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`)
       .then((response) => {
         return this.setState({
-          gifs: response.data.data
+          gifs: response.data.data,
+          loading: false
         })
       })
       .catch((error) => {
@@ -60,9 +54,14 @@ export default class App extends Component {
           </div>
         </div>
         <div className="main-content">
-          <GifList
-            data={this.state.gifs}
-          />
+          {
+            (this.state.loading)
+              ? <p>Loading ...</p>
+              : <GifList
+                data={this.state.gifs}
+              />
+          }
+
         </div>
       </div>
     );
