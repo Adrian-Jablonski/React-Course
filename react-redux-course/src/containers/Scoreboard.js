@@ -5,6 +5,7 @@ import * as PlayerActionCreators from "../redux/actions/player";
 import Player from "../components/Player";
 import Header from "../components/Header";
 import AddPlayerForm from "../components/AddPlayerForm";
+import PlayerDetail from "../components/PlayerDetail";
 import PropTypes from "prop-types";
 
 class Scoreboard extends Component {
@@ -13,7 +14,7 @@ class Scoreboard extends Component {
     };
 
     render() {
-        const { dispatch, players } = this.props;
+        const { dispatch, players, selectedPlayerIndex } = this.props;
 
         const addPlayer = bindActionCreators(
             PlayerActionCreators.addPlayer,
@@ -27,6 +28,15 @@ class Scoreboard extends Component {
             PlayerActionCreators.updatePlayerScore,
             dispatch
         );
+        const selectPlayer = bindActionCreators(
+            PlayerActionCreators.selectPlayer,
+            dispatch
+        );
+
+        let selectedPlayer;
+        if(selectedPlayerIndex !== -1) {
+            selectedPlayer = players[selectedPlayerIndex];
+        }
 
         const playerComponents = players.map((player, index) => {
             return (
@@ -37,6 +47,7 @@ class Scoreboard extends Component {
                     key={player.name}
                     updatePlayerScore={updatePlayerScore}
                     removePlayer={removePlayer}
+                    selectPlayer={selectPlayer}
                 />
             );
         });
@@ -46,11 +57,16 @@ class Scoreboard extends Component {
                 <Header players={players} />
                 <div className="players">{playerComponents}</div>
                 <AddPlayerForm addPlayer={addPlayer} />
+                <div className="player-detail">
+                    <PlayerDetail 
+                        selectedPlayer={selectedPlayer}
+                    ></PlayerDetail>
+                </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = state => ({ players: state });
+const mapStateToProps = (state) => ({ players: state.players, selectedPlayerIndex: state.selectedPlayerIndex });
 
 export default connect(mapStateToProps)(Scoreboard);
