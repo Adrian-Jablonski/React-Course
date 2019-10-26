@@ -75,6 +75,7 @@ Actions: Explicit events that occur in our application represented by a type and
 Action Creators: In Redux, a construct for generating an action.
 
 ```javascript
+// src/actions/player.js
 import * as PlayerActionTypes from '../actiontypes/player';
 
 export const addPlayer = (name) => {
@@ -98,4 +99,84 @@ export const updatePlayerScore = (index, score) => {
         score
     }
 }
+```
+
+## Setup Redux Store
+
+```javascript
+// index.js
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import PlayerReducer from './src/reducers/player';
+
+const store = createStore(
+    PlayerReducer
+);
+
+render(
+    <Provider store={store}>
+        <Scoreboard></Scoreboard>
+    </Provider>,
+    document.getElementById('root')
+)
+```
+
+## Connecting Scoreboard container to redux store
+
+```javascript
+// src/containers/Scoreboard.js
+
+import {connect} from 'react-redux';
+
+const mapStateToProps = (state) => (
+  {
+    players: state
+  }
+)
+
+// Subscribes Scoreboard to any changes in Redux state
+export default connect(mapStateToProps)(Scoreboard);
+
+```
+### Bound action creators
+- Package action creators into ready-to-use methods
+- Eliminate the need to pass dispatch down to every child component
+- Provide a way for components to invoke an action and dispatch it all at once
+
+
+```javascript
+// src/containers/Scoreboard.js
+
+import {bindActionCreators} from 'redux';
+import * as PlayerActionCreators from '../actions/player';
+
+render() {
+
+    const {dispatch, players } = this.props;
+    const addPlayer = bindActionCreators(PlayerActionCreators.addPlayer, dispatch);
+    const removePlayer = bindActionCreators(PlayerActionCreators.removePlayer, dispatch);
+    const updatePlayerScore = bindActionCreators(PlayerActionCreators.updatePlayerScore, dispatch);
+
+    const playerComponents = players.map((player, index) => {
+      <Player
+        index={index}
+        name={player.name}
+        score={player.score}
+        key={player.name}
+        updatePlayerScore={updatePlayerScore}
+        removePlayer={removePlayer}
+      ></Player>
+    })
+
+    return (
+      <div className="scoreboard">
+        <Header players={players} />
+        <div className="players">
+          {playerComponents}
+        </div>
+        <AddPlayerForm addPlayer={addPlayer} />
+      </div>
+    );
+  };
+
 ```
