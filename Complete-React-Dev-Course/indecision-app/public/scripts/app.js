@@ -28,10 +28,14 @@ var IndecisionApp = function (_React$Component) {
     _createClass(IndecisionApp, [{
         key: 'handleDeleteOptions',
         value: function handleDeleteOptions() {
+            // this.setState(() => {
+            //     return {
+            //         options: []
+            //     }
+            // })
+
             this.setState(function () {
-                return {
-                    options: []
-                };
+                return { options: [] };
             });
         }
     }, {
@@ -48,6 +52,12 @@ var IndecisionApp = function (_React$Component) {
             if (this.state.options.indexOf(option) > -1) {
                 return 'This option already exists';
             }
+
+            // this.setState((prevState) => {
+            //     return {
+            //         options: prevState.options.concat([option])
+            //     }
+            // })
 
             this.setState(function (prevState) {
                 return {
@@ -189,10 +199,14 @@ var AddOption = function (_React$Component2) {
             e.target.elements.option.value = '';
             var error = this.props.handleAddOption(option);
 
+            // this.setState(() => {
+            //     return {
+            //         error
+            //     }
+            // })
+
             this.setState(function () {
-                return {
-                    error: error
-                };
+                return { error: error };
             });
         }
     }, {
@@ -204,7 +218,7 @@ var AddOption = function (_React$Component2) {
                 this.state.error && React.createElement(
                     'p',
                     null,
-                    'This option already exists+'
+                    'This option already exists'
                 ),
                 React.createElement(
                     'form',
