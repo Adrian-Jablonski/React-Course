@@ -7,15 +7,8 @@ import Header from './Header';
 
 export default class IndecisionApp extends Component {
 
-    constructor(props) {
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.handleDeleteOption = this.handleDeleteOption.bind(this);
-        this.state = {
-            options: this.props.options
-        }
+    state = {
+        options: this.props.options
     }
 
     componentDidMount() {
@@ -41,7 +34,7 @@ export default class IndecisionApp extends Component {
         console.log("componentWillUnmount")
     }
 
-    handleDeleteOptions() {
+    handleDeleteOptions = () => {
         // this.setState(() => {
         //     return {
         //         options: []
@@ -51,7 +44,7 @@ export default class IndecisionApp extends Component {
         this.setState(() => ({ options: [] }))
     }
 
-    handleDeleteOption(optionToRemove) {
+    handleDeleteOption = (optionToRemove) => {
         this.setState((prevState) => ({
             options: prevState.options.filter((option) => {
                 return optionToRemove !== option;
@@ -59,13 +52,13 @@ export default class IndecisionApp extends Component {
         }))
     }
 
-    handlePick() {
+    handlePick = () => {
         const randomNum = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNum];
         alert(option);
     }
 
-    handleAddOption(option) {
+    handleAddOption = (option) => {
 
         if (this.state.options.indexOf(option) > -1) {
             return 'This option already exists';

@@ -2,5 +2,8 @@
     "presets": [
         "env", 
         "react"
+    ],
+    "plugins": [
+        "transform-class-properties"    // Ran yarn add babel-plugin-transform-class-properties for plugin
     ]
 }
