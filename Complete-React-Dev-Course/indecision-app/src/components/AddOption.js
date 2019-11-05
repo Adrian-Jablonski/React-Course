@@ -28,9 +28,9 @@ export default class AddOption extends Component {
     render() {
         return (
             <div>
-                {this.state.error && <p>This option already exists</p>}
-                <form onSubmit={this.handleAddOption}>
-                    <input type="text" name="option" required></input>
+                {this.state.error && <p className="add-option-error">This option already exists</p>}
+                <form className="add-option" onSubmit={this.handleAddOption}>
+                    <input className="add-option__input" type="text" name="option" required></input>
                     <button className="button">Add Option</button>
                 </form>
             </div>
