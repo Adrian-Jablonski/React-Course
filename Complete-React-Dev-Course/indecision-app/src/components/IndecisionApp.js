@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import AddOption from './AddOption';
 import Options from './Options';
@@ -22,7 +22,7 @@ export default class IndecisionApp extends Component {
         } catch (e) {
             // Do nothing
         }
-        
+
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -90,18 +90,20 @@ export default class IndecisionApp extends Component {
                 <Header
                     subtitle={subtitle}
                 ></Header>
-                <Action
-                    hasOptions={this.state.options.length > 0}
-                    handlePick={this.handlePick}
-                ></Action>
-                <Options
-                    options={this.state.options}
-                    handleDeleteOptions={this.handleDeleteOptions}
-                    handleDeleteOption={this.handleDeleteOption}
-                ></Options>
-                <AddOption
-                    handleAddOption={this.handleAddOption}
-                ></AddOption>
+                <div className="container">
+                    <Action
+                        hasOptions={this.state.options.length > 0}
+                        handlePick={this.handlePick}
+                    ></Action>
+                    <Options
+                        options={this.state.options}
+                        handleDeleteOptions={this.handleDeleteOptions}
+                        handleDeleteOption={this.handleDeleteOption}
+                    ></Options>
+                    <AddOption
+                        handleAddOption={this.handleAddOption}
+                    ></AddOption>
+                </div>
                 <OptionModal
                     selectedOption={this.state.selectedOption}
                     handleDeleteSelectedOption={this.handleDeleteSelectedOption}
