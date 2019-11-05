@@ -95,14 +95,16 @@ export default class IndecisionApp extends Component {
                         hasOptions={this.state.options.length > 0}
                         handlePick={this.handlePick}
                     ></Action>
-                    <Options
-                        options={this.state.options}
-                        handleDeleteOptions={this.handleDeleteOptions}
-                        handleDeleteOption={this.handleDeleteOption}
-                    ></Options>
-                    <AddOption
-                        handleAddOption={this.handleAddOption}
-                    ></AddOption>
+                    <div className="widget">
+                        <Options
+                            options={this.state.options}
+                            handleDeleteOptions={this.handleDeleteOptions}
+                            handleDeleteOption={this.handleDeleteOption}
+                        ></Options>
+                        <AddOption
+                            handleAddOption={this.handleAddOption}
+                        ></AddOption>
+                    </div>
                 </div>
                 <OptionModal
                     selectedOption={this.state.selectedOption}
