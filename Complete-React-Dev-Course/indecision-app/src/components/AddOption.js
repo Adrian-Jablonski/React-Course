@@ -31,7 +31,7 @@ export default class AddOption extends Component {
                 {this.state.error && <p>This option already exists</p>}
                 <form onSubmit={this.handleAddOption}>
                     <input type="text" name="option" required></input>
-                    <button>Add Option</button>
+                    <button className="button">Add Option</button>
                 </form>
             </div>
 
