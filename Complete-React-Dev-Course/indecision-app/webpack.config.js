@@ -13,7 +13,7 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/
         }, {
-            test: /\.scss$/,
+            test: /\.s?css$/,
             use: [
                 // array of loaders (installed style-loader, css-loader, sass-loader, & node-sass through yarn)
                 'style-loader',
