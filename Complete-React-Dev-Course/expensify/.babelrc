@@ -4,6 +4,7 @@
         "react"
     ],
     "plugins": [
-        "transform-class-properties"    // Ran yarn add babel-plugin-transform-class-properties for plugin
+        "transform-class-properties",    // Ran yarn add babel-plugin-transform-class-properties for plugin
+        "transform-object-rest-spread"
     ]
 }
