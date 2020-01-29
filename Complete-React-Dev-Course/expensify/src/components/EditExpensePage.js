@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense } from '../redux/actions/expenses';
-import { removeExpense } from '../redux/actions/expenses';
+import { editExpense, removeExpense } from '../redux/actions/expenses';
 
 const EditExpensePage = ({ dispatch, history, match, expense }) => {
     return (
