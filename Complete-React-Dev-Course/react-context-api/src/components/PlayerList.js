@@ -5,15 +5,14 @@ import { Consumer } from './Context/index';
 const PlayerList = () => {
   return (
     <Consumer>
-      {context => {
+      {({players}) => {
         return (
           <React.Fragment>
-            {context.players.map((player, index) =>
+            {players.map((player, index) =>
               <Player
                 {...player}
                 key={player.id.toString()}
                 index={index}
-                changeScore={context.actions.changeScore}
               />
             )}
           </React.Fragment>

@@ -24,10 +24,10 @@ class Player extends PureComponent {
       <div className="player">
 
         <Consumer>
-          {context => {
+          {({actions}) => {
             return (
               <span className="player-name">
-                <button className="remove-player" onClick={() => context.actions.removePlayer(id)}>✖</button>
+                <button className="remove-player" onClick={() => actions.removePlayer(id)}>✖</button>
                 {name}
               </span>
 
