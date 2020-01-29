@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Provider } from './Context/index';
 import Header from './Header';
 import PlayerList from './PlayerList';
 import AddPlayerForm from './AddPlayerForm';
@@ -33,13 +34,13 @@ class App extends Component {
   prevPlayerId = 4;
 
   handleScoreChange = (index, delta) => {
-    this.setState( prevState => ({
+    this.setState(prevState => ({
       score: prevState.players[index].score += delta
     }));
   }
 
   handleAddPlayer = (name) => {
-    this.setState( prevState => {
+    this.setState(prevState => {
       return {
         players: [
           ...prevState.players,
@@ -54,7 +55,7 @@ class App extends Component {
   }
 
   handleRemovePlayer = (id) => {
-    this.setState( prevState => {
+    this.setState(prevState => {
       return {
         players: prevState.players.filter(p => p.id !== id)
       };
@@ -63,17 +64,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="scoreboard">
-        <Header players={this.state.players} />
+      <Provider>
+        <div className="scoreboard">
+          <Header players={this.state.players} />
 
-        <PlayerList 
-          players={this.state.players} 
-          changeScore={this.handleScoreChange}
-          removePlayer={this.handleRemovePlayer}   
-        />
-        
-        <AddPlayerForm addPlayer={this.handleAddPlayer} />
-      </div>
+          <PlayerList
+            players={this.state.players}
+            changeScore={this.handleScoreChange}
+            removePlayer={this.handleRemovePlayer}
+          />
+
+          <AddPlayerForm addPlayer={this.handleAddPlayer} />
+        </div>
+      </Provider>
     );
   }
 }
