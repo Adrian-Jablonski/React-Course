@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Counter from './Counter';
+import { Consumer } from './Context';
 
 class Player extends PureComponent {
 
   static propTypes = {
-    changeScore: PropTypes.func.isRequired,
-    removePlayer: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
@@ -14,29 +13,31 @@ class Player extends PureComponent {
   };
 
   render() {
-    
-    const { 
-      name,
-      id,
-      score,
-      index,
-      removePlayer,
-      changeScore
-    } = this.props;
 
     return (
-      <div className="player">
-        <span className="player-name">
-          <button className="remove-player" onClick={() => removePlayer(id)}>✖</button>
-          { name }
-        </span>
-  
-        <Counter 
-          score={score}
-          index={index}
-          changeScore={changeScore} 
-        />
-      </div>
+      <Consumer>
+        {context => {
+          const {
+            name,
+            id,
+            score,
+            index
+          } = this.props;
+          return (
+            <div className="player">
+              <span className="player-name">
+                <button className="remove-player" onClick={() => context.actions.removePlayer(id)}>✖</button>
+                {name}
+              </span>
+
+              <Counter
+                score={score}
+                index={index}
+              />
+            </div>
+          )
+        }}
+      </Consumer>
     );
   }
 }
