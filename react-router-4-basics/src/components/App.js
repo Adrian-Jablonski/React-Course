@@ -7,6 +7,7 @@ import About from './About';
 import Teachers from './Teachers';
 import Courses from './Courses';
 import NotFound from './NotFound';
+import Featured from './Featured';
 
 const App = () => (
   <BrowserRouter>
@@ -16,7 +17,8 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/about" render={() => <About />} /> {/* Render method is useful if props need to be passed */}
-        <Route path="/teachers" component={Teachers} />
+        <Route exact path="/teachers" component={Teachers} />
+        <Route path="/teachers/:topic/:name" component={Featured} />
         <Route path="/courses" component={Courses} />
 
         <Route component={NotFound} />
