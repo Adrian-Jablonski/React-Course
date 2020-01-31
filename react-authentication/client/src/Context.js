@@ -10,13 +10,21 @@ export class Provider extends Component {
     this.data = new Data();
   }
 
+  state = {
+    authenticatedUser: null
+  }
+
   render() {
+    const { authenticatedUser } = this.state;
+
     const value = {
+      authenticatedUser,
       data: this.data,
       actions: {
         signIn: this.signIn
       }
     }
+
     return (
       <Context.Provider value={value}>
         {this.props.children}
@@ -27,6 +35,13 @@ export class Provider extends Component {
   
   signIn = async (username, password) => {
     const user = await this.data.getUser(username, password);
+    if (user !== null) {
+      this.setState(() => {
+        return {
+          authenticatedUser: user
+        }
+      })
+    }
     return user;
   }
 
