@@ -21,6 +21,9 @@ const authenticateUser = (req, res, next) => {
   // Get the user's credentials from the Authorization header.
   const credentials = auth(req);
 
+  console.log("#####")
+  console.log(credentials);
+
   if (credentials) {
     // Look for a user whose `username` matches the credentials `name` property.
     const user = users.find(u => u.username === credentials.name);
