@@ -7,6 +7,8 @@
 - initialize eslint with yarn eslint -- --init
 - yarn add --dev eslint-plugin-react babel-eslint
 
+- Add "parser": "babel-eslint" to eslint file to get rid of "Parsing error: Unexpected token =eslint in code editor"
+
 ## pm2
 - yarn add pm2
 - Add the below for a start script to package.json
