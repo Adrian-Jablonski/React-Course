@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node lib/server.js",
-    "tutorial-script": "pm2 start lib/server.js --watch --interpreter babel-node"
+    "tutorial-script": "pm2 start lib/server.js --watch --interpreter babel-node",
+    "webpack": "webpack -wd"
   },
   "babel": {
     "presets": [
@@ -21,11 +22,18 @@
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
-    "pm2": "^4.2.3"
+    "pm2": "^4.2.3",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   }
 }
