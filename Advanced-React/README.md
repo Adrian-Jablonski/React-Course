@@ -9,21 +9,6 @@
 
 - Add "parser": "babel-eslint" to eslint file to get rid of "Parsing error: Unexpected token =eslint in code editor"
 
-## pm2
-- yarn add pm2
-- Add the below for a start script to package.json
-
-```json
-...
-"scripts": {
-    "dev": "pm2 start lib/server.js --watch"
-},
-...
-
-```
-
-- run yarn dev
-- run yarn pm2 logs
 
 ## babel
 - Add the below to package.json
@@ -32,24 +17,32 @@
 
 ...
 "babel": {
-	"presets": ["react", "env", "stage-2"]
-},
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-proposal-class-properties"
+      ]
+    ]
+  },
 ...
 
 ```
 
 - Change the run script to include "--interpreter babel-node"
 
-- yarn add babel-cli babel-preset-react babel-preset-env babel-preset-stage-2
+- yarn add @babel/cli @babel/core @babel/node @babel/plugin-proposal-class-properties @babel/preset-react @babel/preset-env
 
-- To fix "Uncaught ReferenceError: regeneratorRuntime is not defined" yarn add babel-polyfill
+- To fix "Uncaught ReferenceError: regeneratorRuntime is not defined" yarn add @babel/polyfill
 
 ## React and webpack
 
 Project setup instructions for running Node and React app on the same port with React application being bundled into a bundle.js file. The node.js ap
 
 - yarn add react react-dom webpack
-- yarn add babel-loader@7.1.5 (Version 8 gives an error)
+- yarn add babel-loader
 - Create a webpack.config.js file
 
 ```javascript
@@ -58,7 +51,7 @@ const path = require('path');
 
 module.exports = {
 	entry: [
-		'babel-polyfill', // Used to fix "Uncaught ReferenceError: regeneratorRuntime is not defined" error
+		'@babel/polyfill', // Used to fix "Uncaught ReferenceError: regeneratorRuntime is not defined" error
 		'./lib/components/Index.js'  // React Entry point
 	],
 	output: {
@@ -82,7 +75,30 @@ module.exports = {
 "scripts": {
 	//...
 	"webpack": "webpack -wd" // w is to watch. d is for development
-  },
+},
 
 ```
 
+## Jest
+JavaScript testing
+
+- yarn add -- dev jest babel-jest
+
+```javascript
+
+"scripts": {
+	//...
+	"test": "jest --watch"
+}
+
+```
+
+- To get rid of describe and expect errors from eslint, add the below in .eslintrc.js file
+
+```javascript
+"env": {
+	//...
+    "jest": true
+},
+	
+```
