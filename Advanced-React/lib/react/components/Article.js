@@ -13,7 +13,7 @@ const styles = {
 		fontWeight: 'bold'
 	},
 	date: {
-		fontSize: '0.85em',
+		fontSize: '0.8em',
 		color: '#888'
 	},
 	author: {
@@ -42,7 +42,7 @@ export default Article;
 
 Article.propTypes = {
 	article: PropTypes.object.isRequired,
-	actions: PropTypes.func.isRequired
+	actions: PropTypes.object.isRequired
 };
 
 const dateDisplay = (dateString) => new Date(dateString).toDateString();

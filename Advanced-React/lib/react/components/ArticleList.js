@@ -22,5 +22,5 @@ export default ArticleList;
 
 ArticleList.propTypes = {
 	articles: PropTypes.object.isRequired,
-	articleActions: PropTypes.func.isRequired
+	articleActions: PropTypes.object.isRequired
 };
