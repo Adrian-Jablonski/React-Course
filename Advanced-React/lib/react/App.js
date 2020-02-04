@@ -1,7 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
-
-import DataApi from '../data/DataApi';
 import ArticleList from './components/ArticleList';
 import PropTypes from 'prop-types';
 
@@ -16,17 +13,18 @@ class App extends Component {
 		authors: this.props.initialData.authors
 	}
 	
-	componentDidMount = async () => {
-		const resp = await axios.get('/data');
-		const api = new DataApi(resp.data);
+	// ***** Data is now pre loaded on server so this is not needed *******
+	// componentDidMount = async () => {
+	// 	const resp = await axios.get('/data');
+	// 	const api = new DataApi(resp.data);
 
-		this.setState(() => {
-			return {
-				articles: api.getArticles(),
-				authors: api.getAuthors()
-			};
-		});
-	}
+	// 	this.setState(() => {
+	// 		return {
+	// 			articles: api.getArticles(),
+	// 			authors: api.getAuthors()
+	// 		};
+	// 	});
+	// }
 
 	articleActions = {
 		lookupAuthor: authorId => this.state.authors[authorId]
