@@ -140,3 +140,34 @@ describe('ArticleList', () => {
 });
 
 ```
+
+## Server Side Rendering of React Components
+
+
+serverRender.js
+```javascript
+
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+
+import App from './react/App';
+
+const serverRender = () => {
+	return ReactDOMServer.renderToString(
+		<App />
+	);
+};
+
+export default serverRender;
+
+```
+
+```javascript
+import serverRender from './serverRender';
+
+app.get('/', (req, res) => {
+	const initialContent = serverRender();	// Used to render the app from Server if JavaScript is disabled in the browser
+	res.render('index', {initialContent});
+});
+
+```
