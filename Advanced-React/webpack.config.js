@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
 	entry: [
 		'@babel/polyfill', // Used to fix "Uncaught ReferenceError: regeneratorRuntime is not defined" error
-		'./lib/react/Index.js'  // React Entry point
+		'./lib/react/renderers/Index.js'  // React Entry point
 	],
 	output: {
 		path: path.resolve(__dirname, 'public'),

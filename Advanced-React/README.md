@@ -142,7 +142,7 @@ describe('ArticleList', () => {
 ```
 
 ## Server Side Rendering of React Components
-
+- Used for better performance and in case JavaScript is disabled in browser
 
 serverRender.js
 ```javascript
@@ -170,4 +170,32 @@ app.get('/', (req, res) => {
 	res.render('index', {initialContent});
 });
 
+```
+
+## Absolute import paths
+
+```javascript
+// package.json
+...
+"scripts": {
+	"dev": "NODE_PATH=./lib ...",	// require import paths will now start in lib
+	...
+}
+
+...
+
+```
+
+```javascript
+//webpack.config
+const config = {
+	resolve: {
+		modules: [
+			// Gets tests to start from lib path
+			path.resolve('./lib'),
+			path.resolve('./node_modules')
+		]
+	},
+	//...
+}
 ```
