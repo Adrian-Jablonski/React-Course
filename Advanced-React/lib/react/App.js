@@ -1,16 +1,30 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 import DataApi from '../data/DataApi';
-import { data } from '../data/testData';
-
 import ArticleList from './components/ArticleList';
 
-const api = new DataApi(data);
+// import { data } from '../data/testData';
+
+// const api = new DataApi(data);
 
 class App extends Component {
+
 	state = {
-		articles: api.getArticles(),
-		authors: api.getAuthors()
+		articles: {},
+		authors: {}
+	}
+	
+	componentDidMount = async () => {
+		const resp = await axios.get('/data');
+		const api = new DataApi(resp.data);
+
+		this.setState(() => {
+			return {
+				articles: api.getArticles(),
+				authors: api.getAuthors()
+			};
+		});
 	}
 
 	articleActions = {
