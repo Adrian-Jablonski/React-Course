@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import DataApi from '../data/DataApi';
 import ArticleList from './components/ArticleList';
+import PropTypes from 'prop-types';
 
 // import { data } from '../data/testData';
 
@@ -11,8 +12,8 @@ import ArticleList from './components/ArticleList';
 class App extends Component {
 
 	state = {
-		articles: {},
-		authors: {}
+		articles: this.props.initialData.articles,
+		authors: this.props.initialData.authors
 	}
 	
 	componentDidMount = async () => {
@@ -42,3 +43,7 @@ class App extends Component {
 }
 
 export default App;
+
+App.propTypes = {
+	initialData: PropTypes.object.isRequired,
+};

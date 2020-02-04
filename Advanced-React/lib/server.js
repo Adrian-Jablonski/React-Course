@@ -8,8 +8,8 @@ const app = express();
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-	const initialContent = serverRender();	// Used to render the app from Server if JavaScript is disabled in the browser
+app.get('/', async (req, res) => {
+	const initialContent = await serverRender();	// Used to render the app from Server if JavaScript is disabled in the browser
 	res.render('index', {initialContent});
 });
 
