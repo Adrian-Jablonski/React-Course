@@ -141,6 +141,10 @@ describe('ArticleList', () => {
 
 ```
 
+### Enzyme testing
+- yarn add --dev enzyme
+- Used for shallow testing
+
 ## Server Side Rendering of React Components
 - Used for better performance and in case JavaScript is disabled in browser
 

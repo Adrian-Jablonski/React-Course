@@ -25,7 +25,7 @@ const styles = {
 	}
 };
 
-const Article = ({article}, {store}) => {
+const Article = ({article, store}) => {
 	const author = store.lookupAuthor(article.authorId);
 	return (
 		<div style={styles.article}>
@@ -37,20 +37,24 @@ const Article = ({article}, {store}) => {
 	);
 };
 
-export default Article;
-
-
 Article.propTypes = {
 	article: PropTypes.shape({
 		authorId: PropTypes.string.isRequired,
 		date: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
-	})
+	}),
+	store: PropTypes.object.isRequired
 };
 
-Article.contextTypes = {
+const ArticleContainer = (props, {store}) => {
+	return <Article {...props} store={store} />;
+};
+
+ArticleContainer.contextTypes = {
 	store: PropTypes.object
 };
+
+export default ArticleContainer;
 
 const dateDisplay = (dateString) => new Date(dateString).toDateString();
