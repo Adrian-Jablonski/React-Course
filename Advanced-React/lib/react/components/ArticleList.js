@@ -2,7 +2,7 @@ import React from 'react';
 import Article from './Article';
 import PropTypes from 'prop-types';
 
-const ArticleList = ({articles, store}) => {
+const ArticleList = ({articles}) => {
 	return (
 		<div>
 			{Object.values(articles).map((article, index) => {
@@ -10,7 +10,6 @@ const ArticleList = ({articles, store}) => {
 					<Article 
 						key={index}
 						article={article}
-						store={store}
 					/>
 				);
 			})}
