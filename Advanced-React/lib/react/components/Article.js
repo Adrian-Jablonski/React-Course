@@ -25,8 +25,8 @@ const styles = {
 	}
 };
 
-const Article = ({article, actions}) => {
-	const author = actions.lookupAuthor(article.authorId);
+const Article = ({article, store}) => {
+	const author = store.lookupAuthor(article.authorId);
 	return (
 		<div style={styles.article}>
 			<p style={styles.title}>{article.title}</p>
@@ -42,7 +42,7 @@ export default Article;
 
 Article.propTypes = {
 	article: PropTypes.object.isRequired,
-	actions: PropTypes.object.isRequired
+	store: PropTypes.object.isRequired
 };
 
 const dateDisplay = (dateString) => new Date(dateString).toDateString();

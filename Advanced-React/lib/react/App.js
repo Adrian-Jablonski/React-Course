@@ -8,10 +8,7 @@ import PropTypes from 'prop-types';
 
 class App extends Component {
 
-	state = {
-		articles: this.props.initialData.articles,
-		authors: this.props.initialData.authors
-	}
+	state = this.props.store.getState();
 	
 	// ***** Data is now pre loaded on server so this is not needed *******
 	// componentDidMount = async () => {
@@ -26,15 +23,16 @@ class App extends Component {
 	// 	});
 	// }
 
-	articleActions = {
-		lookupAuthor: authorId => this.state.authors[authorId]
-	}
+	// **** Moved to DataApi
+	// articleActions = {
+	// 	lookupAuthor: authorId => this.state.authors[authorId]
+	// }
 
 	render() {
 		return (
 			<ArticleList
 				articles={this.state.articles}
-				articleActions={this.articleActions}
+				store={this.props.store}
 			/>
 		);
 	}
@@ -43,5 +41,5 @@ class App extends Component {
 export default App;
 
 App.propTypes = {
-	initialData: PropTypes.object.isRequired,
+	store: PropTypes.object.isRequired
 };

@@ -9,18 +9,13 @@ import App from '../App';
 
 const serverRender = async () => {
 	const resp = await axios.get(`http://${config.host}:${config.port}/data`);
-	const api = new DataApi(resp.data);
-
-	const initialData = {
-		articles: api.getArticles(),
-		authors: api.getAuthors()
-	};
+	const store = new DataApi(resp.data);
 
 	return {
 		initialMarkup: ReactDOMServer.renderToString(
-			<App initialData={initialData}/>
+			<App store={store}/>
 		),
-		initialData
+		initialData: resp.data
 	};
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Article from './Article';
 import PropTypes from 'prop-types';
 
-const ArticleList = ({articles, articleActions}) => {
+const ArticleList = ({articles, store}) => {
 	return (
 		<div>
 			{Object.values(articles).map((article, index) => {
@@ -10,7 +10,7 @@ const ArticleList = ({articles, articleActions}) => {
 					<Article 
 						key={index}
 						article={article}
-						actions={articleActions}
+						store={store}
 					/>
 				);
 			})}
@@ -22,5 +22,5 @@ export default ArticleList;
 
 ArticleList.propTypes = {
 	articles: PropTypes.object.isRequired,
-	articleActions: PropTypes.object.isRequired
+	store: PropTypes.object.isRequired
 };
