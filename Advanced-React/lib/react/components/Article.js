@@ -41,7 +41,12 @@ export default Article;
 
 
 Article.propTypes = {
-	article: PropTypes.object.isRequired,
+	article: PropTypes.shape({
+		authorId: PropTypes.string.isRequired,
+		date: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		body: PropTypes.string.isRequired,
+	}),
 	store: PropTypes.object.isRequired
 };
 
