@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import storeProvider from '../providers/storeProvider';
+
 const styles = {
 	article: {
 		paddingBottom: 10,
@@ -47,14 +49,14 @@ Article.propTypes = {
 	store: PropTypes.object.isRequired
 };
 
-const ArticleContainer = (props, {store}) => {
-	return <Article {...props} store={store} />;
-};
+// const ArticleContainer = (props, {store}) => {
+// 	return <Article {...props} store={store} />;
+// };
 
-ArticleContainer.contextTypes = {
-	store: PropTypes.object
-};
+// ArticleContainer.contextTypes = {
+// 	store: PropTypes.object
+// };
 
-export default ArticleContainer;
+export default storeProvider(Article);
 
 const dateDisplay = (dateString) => new Date(dateString).toDateString();
