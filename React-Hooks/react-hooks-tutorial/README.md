@@ -1,68 +1,69 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Hooks
 
-## Available Scripts
+- React hooks can only be used with functional components. Hooks do not work with class Components
+- Can't call Hooks inside loops, conditions, or nested function. Always use Hooks at the top level of a React function
 
-In the project directory, you can run:
+## useState
+- useState is a replacement for state
+- useState returns an array with two values. The first is the state and the second is a function to update state
 
-### `yarn start`
+### Basic useState Example
+```javascript
+import React, {useState} from 'react';
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+const App = () => {
+	const [count, setCount] = useState(10);
+	
+	return (
+		<div className="App">
+			{/* Using the count variable */}
+			<button onClick={() => setCount(count - 1)}>-</button>
+			{/* Using a function */}
+			<button onClick={() => setCount(currentCount => currentCount + 1)}>+</button>
+			<div>{count}</div>
+		</div>
+	);
+}
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+export default App;
 
-### `yarn test`
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### useState example with object as state
+```javascript
+import React, { useState } from 'react';
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+const App = () => {
+  const [{ count2, count3 }, setCountObj] = useState({ count2: 20, count3: 50 });
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+  return (
+    <div className="App">
+      <div>
+        <h2>Count 2 & 3</h2>
+        <button
+          onClick={() =>
+            setCountObj(currentState => ({
+              ...currentState,  // Need to make a copy of state or other values in state object will be lost
+              count2: currentState.count2 + 1
+            }))
+          }
+        >+</button>
+        <div>Count: 2 {count2}</div>
+        <button
+          onClick={() =>
+            setCountObj(currentState => ({
+              ...currentState, // Need to make a copy of state or other values in state object will be lost
+              count3: currentState.count3 + 1
+            }))
+          }
+        >+</button>
+        <div>Count: 3 {count3}</div>
+      </div>
+    </div>
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default App;
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
