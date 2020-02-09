@@ -147,3 +147,58 @@ export const useForm = (initialValues) => {
 	}]
 }
 ```
+
+## UseEffect
+- Runs each time a component is rendered
+- Replacement for componentDidMount and componentWillUnmount
+
+### Basic use effect example
+```javascript
+import React, {useEffect} from 'react';
+
+const App = () => {
+
+  const [values, handleChange] = useForm({ email: '', password: '', firstName: '' });
+
+  useEffect(() => {
+    console.log('render');
+  }, [values.email, values.password]) // Only renders when email or password is changed since dependency array is passed values.email and values.password
+
+  return (
+    <div className="App">
+      ....
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+### componentWillUnmount example
+- Can return a cleanup function in useEffect to run a function that works like componentWillUnmount
+
+```javascript
+import React, {useEffect} from 'react';
+
+const App = () => {
+
+  const [values, handleChange] = useForm({ email: '', password: '', firstName: '' });
+
+  useEffect(() => {
+    return () => {
+      // componentWillUnmount replacement
+      console.log('Unmounting');
+    }
+  }) 
+
+  return (
+    <div className="App">
+      ....
+    </div>
+  );
+}
+
+export default App;
+
+```
