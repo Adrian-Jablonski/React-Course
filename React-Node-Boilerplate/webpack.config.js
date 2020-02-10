@@ -4,7 +4,7 @@ const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 module.exports = {
 	entry: [
 		'@babel/polyfill', // Used to fix "Uncaught ReferenceError: regeneratorRuntime is not defined" error
-		'./lib/components/Index.js'  // React Entry point
+		'./lib/react/Index.js'  // React Entry point
 	],
 	output: {
 		path: path.resolve(__dirname, 'public'),
