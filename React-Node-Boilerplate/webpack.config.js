@@ -1,4 +1,5 @@
 const path = require('path');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
 	entry: [
@@ -30,5 +31,13 @@ module.exports = {
 				],
 			},
 		]
-	}
+	},
+	// Used to automatically refresh browser on front end changes
+	plugins: [
+		new BrowserSyncPlugin({
+			host: 'localhost',
+			port: 8000,
+			proxy: 'localhost:8080'
+		})
+	]
 };

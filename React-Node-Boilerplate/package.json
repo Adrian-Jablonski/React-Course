@@ -1,11 +1,10 @@
 {
-  "name": "Advanced-React",
+  "name": "Template",
   "version": "1.0.0",
   "main": "lib/server.js",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node lib/server.js",
-    "tutorial-script": "pm2 start lib/server.js --watch --interpreter babel-node",
     "webpack": "webpack -wd",
     "test": "jest --watch"
   },
@@ -31,6 +30,8 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "21.2.0",
     "babel-loader": "^8.0.6",
+    "browser-sync": "^2.26.7",
+    "browser-sync-webpack-plugin": "^2.2.2",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.18.2",

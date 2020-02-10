@@ -133,3 +133,27 @@ module: {
 	}
 
 ```
+
+## Browser sync
+- Plugin for browser to automatically refresh on any React or SASS changes
+- yarn add browser-sync browser-sync-webpack-plugin --dev
+
+```javascript
+// webpack.config.js
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
+// ....
+
+module.exports {
+	//...
+	plugins: [
+		new BrowserSyncPlugin({
+			host: 'localhost',
+			port: 8000,	// Port that will be used by browser
+			proxy: 'localhost:8080'  // Port assigned to server
+		})
+	]
+}
+	
+
+```
