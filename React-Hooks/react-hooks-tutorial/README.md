@@ -202,3 +202,47 @@ const App = () => {
 export default App;
 
 ```
+
+### API fetch example with useEffect and useState
+
+```javascript
+// useFetch.js
+import { useEffect, useState } from "react"
+
+export const useFetch = (url) => {
+	const [state, setState] = useState({data: null, loading: true});
+
+	useEffect(() => {
+		setState(state => ({data: state.data, loading: true}));
+		fetch(url)
+			.then(x => x.text())
+			.then(y => {
+				setState({data: y, loading: false})
+			});
+	}, [url])
+
+	return state;
+}
+```
+
+```javascript
+// App.js
+import React from 'react';
+import { useFetch } from '../hooks/useFetch';
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`);
+
+  return (
+    <div className="App">
+      <div>
+        {!data ? 'loading...' : data}
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+```
