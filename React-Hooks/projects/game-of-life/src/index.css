@@ -1,0 +1,33 @@
+.box {
+  border: 1px solid black;
+}
+
+.box:hover {
+  background-color: rgb(253, 188, 188);
+}
+
+.alive {
+  background-color: rgb(255, 68, 68);
+}
+
+.dead {
+  background-color: white;
+}
+
+.options {
+  display: flex;
+  margin: 20px;
+}
+
+.setting {
+  margin-left: 20px;
+}
+
+.setting label {
+  margin-right: 10px;
+}
+
+.setting input {
+  width: 50px;
+  text-align: center;
+}
