@@ -2,7 +2,7 @@
   border: 1px solid black;
 }
 
-.box:hover {
+.hover-box {
   background-color: rgb(253, 188, 188);
 }
 

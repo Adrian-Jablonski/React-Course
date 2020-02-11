@@ -1,3 +1,5 @@
+import {shapeTypes} from '../data/shapeTypes';
+
 const operations = [
 	[-1, -1],
 	[-1, 0],
@@ -34,4 +36,14 @@ export const getNumberOfNeighbors = (grid, row, col, numRows, numCols) => {
 		}
 	})
 	return neightborCount;
+}
+
+export const setHoverBoxByShape = (loc, shape) => {
+	const origin = loc.split('-');
+	let shapePoints = [];
+	shapeTypes[shape].forEach(([x, y]) => {
+		shapePoints.push(`${Number(origin[0]) + x}-${Number(origin[1]) + y}`);
+	})
+
+	return shapePoints;
 }

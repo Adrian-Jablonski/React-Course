@@ -1,36 +1,60 @@
 import React, { useState, useCallback, useRef } from 'react';
 import Box from './components/Box';
 
-import { gerenateEmptyGrid, getNumberOfNeighbors } from './functions/helpers';
+import { gerenateEmptyGrid, getNumberOfNeighbors, setHoverBoxByShape } from './functions/helpers';
+
+import { shapeTypes } from './data/shapeTypes';
 
 const numRows = 50;
 const numCols = 50;
 
 
 const App = () => {
+  // ------ State -------
   const [grid, setGrid] = useState(() => {
     return gerenateEmptyGrid();
   });
-
   const [boxPixels, setBoxPixels] = useState(14);
   const [randomPerc, setRandomPerc] = useState(0);
-
   const [running, setRunning] = useState(false);
+  const [hoverBoxes, setHoverBoxes] = useState([]);
+  const [shape, setShape] = useState('point');
 
+  // ------ Refs -------
+  // Setup running ref to use in runSimulation function in order for the function to be created once and not updated each time running is updated
+  const runningRef = useRef(running);
+  const hoverBoxesRef = useRef(hoverBoxes);
+  const shapeRef = useRef(shape);
+
+  // ------ useCallBack -------
 
   const setGridVal = useCallback((rIndex, cIndex) => {
     setGrid((g) => {
       const gridCopy = [
         ...g
       ]
-      const currValue = gridCopy[rIndex][cIndex];
-      gridCopy[rIndex][cIndex] = (currValue) ? 0 : 1;
+
+      if (hoverBoxesRef.current.length === 1) {
+        // Allow erease for point
+        const currValue = gridCopy[rIndex][cIndex];
+        gridCopy[rIndex][cIndex] = (currValue) ? 0 : 1;
+      } else {
+        hoverBoxesRef.current.forEach((point) => {
+          const [x, y] = point.split('-');
+          gridCopy[x][y] = 1;
+        })
+      }
       return gridCopy;
     })
-  }, [setGrid])
+  }, [setGrid]);
 
-  // Setup running ref to use in runSimulation function in order for the function to be created once and not updated each time running is updated
-  const runningRef = useRef(running);
+  const setHoverBoxVal = useCallback((loc) => {
+    let locArray = setHoverBoxByShape(loc, shapeRef.current);
+    hoverBoxesRef.current = locArray;
+    setHoverBoxes(locArray);
+  }, [setHoverBoxes]);
+
+
 
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
@@ -72,6 +96,8 @@ const App = () => {
 
   }, []); // Empty array will only create the function once
 
+  // ------ Styles -------
+
   const gridStyle = {
     display: 'grid',
     gridTemplateColumns: `repeat(${numCols}, ${boxPixels}px)`
@@ -98,7 +124,7 @@ const App = () => {
         >Clear</button>
 
         <div className="set-box-pixels setting">
-          <label>Box Pixels :</label>
+          <label>Zoom Level :</label>
           <input
             type="number"
             value={boxPixels}
@@ -118,6 +144,24 @@ const App = () => {
         </div>
       </div>
 
+      <div className="options setting">
+        <label>Shape: </label>
+        <select
+          value={shape}
+          onChange={(e) => {
+            setShape(e.target.value);
+            shapeRef.current = e.target.value;
+          }}
+        >
+          {Object.keys(shapeTypes).map((shape, index) => {
+            return (
+              <option key={index} value={shape}>{`${shape.slice(0, 1).toUpperCase()}${shape.slice(1)}`}</option>
+            )
+
+          })}
+        </select>
+      </div>
+
       <div style={gridStyle}>
         {grid.map((rows, rIndex) => {
           return rows.map((col, cIndex) => {
@@ -130,6 +174,8 @@ const App = () => {
                 boxPixels={boxPixels}
                 boxVal={boxVal}
                 setGridVal={setGridVal}
+                hoverClass={hoverBoxes.indexOf(`${rIndex}-${cIndex}`) !== -1}
+                setHoverBoxVal={setHoverBoxVal}
               />
             )
           })
