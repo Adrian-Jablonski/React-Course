@@ -246,3 +246,37 @@ const App = () => {
 export default App;
 
 ```
+
+## useRef
+
+### Basic useRef example
+
+```javascript
+import React, { useRef } from 'react';
+
+const App = () => {
+  const inputRef = useRef();
+
+  return (
+    <div className="App">
+      <div>
+        <label>Email</label>
+        <input
+          ref={inputRef}
+          name='email'
+          value={values.email}
+          onChange={handleChange}
+        />
+      </div>
+
+      <button onClick={() => {
+        inputRef.current.focus();
+      }}>Focus</button>
+
+    </div>
+  );
+}
+
+export default App;
+
+```
