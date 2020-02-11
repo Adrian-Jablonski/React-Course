@@ -280,3 +280,109 @@ const App = () => {
 export default App;
 
 ```
+
+## useLayoutEffect
+
+- The signiture is identical to useEffect, but it fires synchronously after all DOM mutations.
+- useEffect can usually be used in place of useLayoutEffect
+
+### Basic useLayoutEffect example
+
+```javascript
+import React, { useRef } from 'react';
+
+const App = () => {
+  const inputRef = useRef();
+
+   useLayoutEffect(() => {
+    //  Logs the position of the element stored in inputRef
+    console.log(inputRef.current.getBoundingClientRect());
+  }, []);
+
+  const [count, setCount] = useState(JSON.parse(localStorage.getItem('count')) || 0);
+  const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`);
+
+  const divRef = useRef();
+  useLayoutEffect(() => {
+    // Will show everytime data updates
+    console.log(divRef.current.getBoundingClientRect());
+  }, [data]);
+
+  return (
+    <div className="App">
+      <div style={{display: 'flex'}}>
+        <div ref={divRef}>
+          {!data ? 'loading...' : data}
+        </div>
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          ref={inputRef}
+          name='email'
+          value={values.email}
+          onChange={handleChange}
+        />
+      </div>
+
+      <button onClick={() => {
+        inputRef.current.focus();
+      }}>Focus</button>
+
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+## useCallback
+- useCallback can be used to prevent a function from rerendering a child component when passed as a prop. The child component must be using React.memo to prevent rerendering if the prop values did not change
+
+```javascript
+import React, { useState, useCallback } from 'react';
+import AppChild from './AppChild';
+
+const App2 = () => {
+	const [count, setCount] = useState(0);
+
+	const increment = useCallback(() => {
+		// passing count to function like below will still change the function
+		// setCount(count + 1)
+
+		// Using the below will not change the function
+		setCount(c => c + 1);
+	}, [setCount])
+
+	return (
+		<div>
+			<AppChild increment={increment}/>
+			<div>count: {count}</div>
+		</div>
+	);
+}
+
+export default App2;
+
+```
+
+```javascript
+import React from 'react';
+import {useCountRenders} from '../hooks/useCountRenders';
+
+// React.memo compares props and will only rerender component if props have changed. By Default React always rerenders a child component if the parent component changes
+const AppChild = React.memo(({increment}) => {
+	useCountRenders();
+
+	return (
+		<div>
+			<h2>Hello</h2>
+			<button onClick={increment}>+</button>
+		</div>
+	);
+});
+
+export default AppChild;
+
+```

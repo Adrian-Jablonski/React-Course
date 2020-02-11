@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useForm } from '../hooks/useForm';
 import { useFetch } from '../hooks/useFetch';
+import { useMeasure } from '../hooks/useMeasure';
 
 const App = () => {
   // useEffect(() => {
@@ -23,15 +24,26 @@ const App = () => {
 
   const inputRef = useRef();
 
+  useLayoutEffect(() => {
+    console.log(inputRef.current.getBoundingClientRect());
+  }, []);
+
   useEffect(() => {
     localStorage.setItem('count', JSON.stringify(count));
   }, [count])
 
+  const [rect, divRef] = useMeasure([data]);
+
   return (
     <div className="App">
-      <div>
-        {!data ? 'loading...' : data}
+      <div style={{display: 'flex'}}>
+        <div ref={divRef}>
+          {!data ? 'loading...' : data}
+        </div>
       </div>
+      <pre>
+        {JSON.stringify(rect, null, 2)}
+      </pre>
       <div>count: {count}</div>
       <button onClick={() => setCount(c => c + 1)}>+</button>
 
