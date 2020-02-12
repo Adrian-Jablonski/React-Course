@@ -15,7 +15,6 @@ const Box = memo(({rIndex, cIndex, boxPixels, boxVal, setGridVal, hoverClass, se
 			onMouseOver={() => 
 				{
 				setHoverBoxVal(`${rIndex}-${cIndex}`)
-				console.log(`${rIndex}-${cIndex}`)
 			}}
 		>
 

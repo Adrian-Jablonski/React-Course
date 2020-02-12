@@ -5,10 +5,6 @@ import { gerenateEmptyGrid, getNumberOfNeighbors, setHoverBoxByShape } from './f
 
 import { shapeTypes } from './data/shapeTypes';
 
-const numRows = 200;
-const numCols = 200;
-
-
 const App = () => {
   // ------ State -------
   const [grid, setGrid] = useState(() => {
@@ -19,6 +15,9 @@ const App = () => {
   const [running, setRunning] = useState(false);
   const [hoverBoxes, setHoverBoxes] = useState([]);
   const [shape, setShape] = useState('point');
+  const [numRows, setNumRows] = useState({ rows: 50, inputRows: 50 });
+  const [numCols, setNumCols] = useState({ cols: 50, inputCols: 50 });
+  const [speed, setSpeed] = useState(100);
 
   // ------ Refs -------
   // Setup running ref to use in runSimulation function in order for the function to be created once and not updated each time running is updated
@@ -49,10 +48,10 @@ const App = () => {
   }, [setGrid]);
 
   const setHoverBoxVal = useCallback((loc) => {
-    let locArray = setHoverBoxByShape(loc, shapeRef.current, numRows, numCols);
+    let locArray = setHoverBoxByShape(loc, shapeRef.current, numRows.rows, numCols.cols);
     hoverBoxesRef.current = locArray;
     setHoverBoxes(locArray);
-  }, [setHoverBoxes]);
+  }, [setHoverBoxes, numRows, numCols]);
 
 
 
@@ -64,12 +63,11 @@ const App = () => {
       const gridCopy = [
         ...g
       ]
-      // return produce(g, gridCopy => {
       const gridUpdateCells = [];
 
-      for (let i = 0; i < numRows; i++) {
-        for (let j = 0; j < numCols; j++) {
-          const neighbors = getNumberOfNeighbors(g, i, j, numRows, numCols);
+      for (let i = 0; i < numRows.rows; i++) {
+        for (let j = 0; j < numCols.cols; j++) {
+          const neighbors = getNumberOfNeighbors(g, i, j, numRows.rows, numCols.cols);
 
           const currGridVal = g[i][j];
 
@@ -86,21 +84,20 @@ const App = () => {
         gridCopy[x][y] = val;
       })
       return gridCopy;
-      // });
     });
 
 
     setTimeout(() => {
       runSimulation()
-    }, 100);
+    }, speed);
 
-  }, []); // Empty array will only create the function once
+  }, [speed]); // Empty array will only create the function once
 
   // ------ Styles -------
 
   const gridStyle = {
     display: 'grid',
-    gridTemplateColumns: `repeat(${numCols}, ${boxPixels}px)`,
+    gridTemplateColumns: `repeat(${numCols.cols}, ${boxPixels}px)`,
     // width: `${numCols * boxPixels}px`
   }
 
@@ -121,7 +118,7 @@ const App = () => {
         >{running ? 'stop' : 'start'}</button>
 
         <button
-          onClick={() => setGrid(gerenateEmptyGrid(numRows, numCols))}
+          onClick={() => setGrid(gerenateEmptyGrid(numRows.rows, numCols.cols))}
         >Clear</button>
 
         <div className="set-box-pixels setting">
@@ -132,6 +129,7 @@ const App = () => {
             onChange={(e) => setBoxPixels(Math.max(e.target.value, 1))}
           />
         </div>
+
         <div className="setting">
           <label>Random Percentage :</label>
           <input
@@ -140,10 +138,54 @@ const App = () => {
             onChange={(e) => setRandomPerc(Math.min(Math.max(e.target.value, 0)), 100)}
           />
           <button
-            onClick={() => setGrid(gerenateEmptyGrid(numRows, numCols, randomPerc * .01))}
+            onClick={() => setGrid(gerenateEmptyGrid(numRows.rows, numCols.cols, randomPerc * .01))}
           >Random</button>
         </div>
       </div>
+
+      {!running &&
+        <div className="setting">
+          <label>Width :</label>
+          <input
+            type="number"
+            value={numCols.inputCols}
+            onChange={(e) => setNumCols({
+              ...numCols,
+              inputCols: Number(e.target.value)
+            })}
+          />
+          <label>Height :</label>
+          <input
+            type="number"
+            value={numRows.inputRows}
+            onChange={(e) => setNumRows({
+              ...numRows,
+              inputRows: Number(e.target.value)
+            })}
+          />
+          <button
+            onClick={() => {
+              setNumRows({
+                ...numRows,
+                rows: numRows.inputRows
+              });
+              setNumCols({
+                ...numCols,
+                cols: numCols.inputCols
+              });
+              setGrid(gerenateEmptyGrid(numRows.inputRows, numCols.inputCols));
+            }}
+          >Set Dimensions</button>
+
+          <label>Speed (Lower is Faster) :</label>
+          <input
+            type="number"
+            value={speed / 25}
+            onChange={(e) => setSpeed(Number(e.target.value) * 25)}
+          />
+        </div>
+      }
+
 
       <div className="options setting">
         <label>Shape: </label>
@@ -167,7 +209,7 @@ const App = () => {
         onMouseOut={
           () => {
             setHoverBoxes([])
-        }}
+          }}
       >
         {grid.map((rows, rIndex) => {
           return rows.map((col, cIndex) => {
