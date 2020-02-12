@@ -100,7 +100,8 @@ const App = () => {
 
   const gridStyle = {
     display: 'grid',
-    gridTemplateColumns: `repeat(${numCols}, ${boxPixels}px)`
+    gridTemplateColumns: `repeat(${numCols}, ${boxPixels}px)`,
+    width: `${numCols * boxPixels}px`
   }
 
   return (
@@ -162,7 +163,13 @@ const App = () => {
         </select>
       </div>
 
-      <div style={gridStyle}>
+      <div style={gridStyle}
+        onMouseOut={
+          () => {
+            setHoverBoxes([])
+            console.log("Mouse Leave")
+        }}
+      >
         {grid.map((rows, rIndex) => {
           return rows.map((col, cIndex) => {
             const boxVal = grid[rIndex][cIndex];

@@ -12,7 +12,7 @@ const Box = memo(({rIndex, cIndex, boxPixels, boxVal, setGridVal, hoverClass, se
 			style={boxStyle}
 			className={`box ${hoverClass ? 'hover-box' : boxVal ? 'alive' : 'dead'}`}
 			onClick={() => setGridVal(rIndex, cIndex)}
-			onMouseEnter={() => setHoverBoxVal(`${rIndex}-${cIndex}`)}
+			onMouseOver={() => setHoverBoxVal(`${rIndex}-${cIndex}`)}
 		>
 
 		</div>
