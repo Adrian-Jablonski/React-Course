@@ -5,8 +5,8 @@ import { gerenateEmptyGrid, getNumberOfNeighbors, setHoverBoxByShape } from './f
 
 import { shapeTypes } from './data/shapeTypes';
 
-const numRows = 50;
-const numCols = 50;
+const numRows = 200;
+const numCols = 200;
 
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
   const [grid, setGrid] = useState(() => {
     return gerenateEmptyGrid();
   });
-  const [boxPixels, setBoxPixels] = useState(14);
+  const [boxPixels, setBoxPixels] = useState(10);
   const [randomPerc, setRandomPerc] = useState(0);
   const [running, setRunning] = useState(false);
   const [hoverBoxes, setHoverBoxes] = useState([]);
@@ -101,7 +101,7 @@ const App = () => {
   const gridStyle = {
     display: 'grid',
     gridTemplateColumns: `repeat(${numCols}, ${boxPixels}px)`,
-    width: `${numCols * boxPixels}px`
+    // width: `${numCols * boxPixels}px`
   }
 
   return (
@@ -167,7 +167,6 @@ const App = () => {
         onMouseOut={
           () => {
             setHoverBoxes([])
-            console.log("Mouse Leave")
         }}
       >
         {grid.map((rows, rIndex) => {
