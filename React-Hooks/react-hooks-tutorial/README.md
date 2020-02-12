@@ -386,3 +386,44 @@ const AppChild = React.memo(({increment}) => {
 export default AppChild;
 
 ```
+
+## useMemo
+- Used to limit function computation to only when the dependency value changes instead of on each render
+
+### Basic Example
+
+```javascript
+import React, { useState, useMemo } from 'react';
+import { useFetch } from '../hooks/useFetch';
+
+const App3 = () => {
+	const [count, setCount] = useState(0);
+	const {data} = useFetch('https://jsonplaceholder.typicode.com/todos')
+
+  // This will only be computed when data changes
+	const longestTitle = useMemo(() => computeLongestTitle(data), [data]);
+
+	return (
+		<div>
+			<div>count: {count}</div>
+			<button onClick={() => setCount(count + 1)}>+</button>
+			<div>{longestTitle}</div>
+		</div>
+	);
+}
+
+export default App3;
+
+// This function should either be outside of the component or inside of useCallback for useMemo to work
+const computeLongestTitle = (apiData) => {
+	if (!apiData) {
+		return [];
+	};
+
+	const longestTitle = JSON.parse(apiData).reduce((a, b) => {
+		return a.title.length > b.title.length ? a : b;
+	}).title;
+	return [longestTitle];
+}
+
+```
