@@ -25,25 +25,33 @@ export const gerenateEmptyGrid = (numRows = 50, numCols = 50, randPerc = 0) => {
 }
 
 export const getNumberOfNeighbors = (grid, row, col, numRows, numCols) => {
-	let neightborCount = 0;
+	let neighborCount = 0;
 	operations.forEach(([x, y]) => {
 		const newI = row + x;
 		const newJ = col + y;
-
-		// Checking grid bounds
-		if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
-			neightborCount += grid[newI][newJ];
+		
+		if (isInsideGrid(newI, numRows, newJ, numCols)) {
+			neighborCount += grid[newI][newJ];
 		}
 	})
-	return neightborCount;
+	return neighborCount;
 }
 
-export const setHoverBoxByShape = (loc, shape) => {
+export const setHoverBoxByShape = (loc, shape, numRows, numCols) => {
 	const origin = loc.split('-');
 	let shapePoints = [];
 	shapeTypes[shape].forEach(([x, y]) => {
-		shapePoints.push(`${Number(origin[0]) + x}-${Number(origin[1]) + y}`);
+		const newX = Number(origin[0]) + x;
+		const newY = Number(origin[1]) + y;
+		if (isInsideGrid(newX, numRows, newY, numCols)) {
+			shapePoints.push(`${newX}-${newY}`);
+		}
 	})
 
 	return shapePoints;
+}
+
+export const isInsideGrid = (newX, numRows, newY, numCols) => {
+	// Checking grid bounds
+	return newX >= 0 && newX < numRows && newY >= 0 && newY < numCols;
 }

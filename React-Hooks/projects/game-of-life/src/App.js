@@ -49,7 +49,7 @@ const App = () => {
   }, [setGrid]);
 
   const setHoverBoxVal = useCallback((loc) => {
-    let locArray = setHoverBoxByShape(loc, shapeRef.current);
+    let locArray = setHoverBoxByShape(loc, shapeRef.current, numRows, numCols);
     hoverBoxesRef.current = locArray;
     setHoverBoxes(locArray);
   }, [setHoverBoxes]);
