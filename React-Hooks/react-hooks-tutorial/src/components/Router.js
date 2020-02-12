@@ -1,13 +1,14 @@
 // useContext example
 
-import React, {useContext, useState, useMemo} from 'react';
+import React, { useContext, useState, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { login } from '../utils/login';
 
 const AppRouter = () => {
-	const [value, setValue] = useState('hello from app router');
+	const [user, setUser] = useState(null);
 
-	const providerValue = useMemo(() => ({value, setValue}), [value, setValue]); // Prevents providerValue from changing unless value or setValue changes
+	const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]); // Prevents providerValue from changing unless user or setUser changes
 
 	return (
 		<Router>
@@ -35,23 +36,38 @@ const AppRouter = () => {
 export default AppRouter;
 
 const Home = () => {
-	const {value, setValue} = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 	return (
 		<div>
 			<h2>Home</h2>
-			<div>{value}</div>
-			<button onClick={() => setValue('Home Page changed value')}>Change Value</button>
+			<pre>{JSON.stringify(user, null, 2)}</pre>
+			{user
+				? 
+				<button
+					onClick={() => {
+						// Call a logout function
+						setUser(null);
+					}}
+				>Logout</button>
+				:
+				<button onClick={async () => {
+					const user = await login();
+					setUser(user);
+				}}
+				>Login</button>
+
+			}
+
 		</div>
 	)
 }
 
 const About = () => {
-	const {value, setValue} = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	return (
 		<div>
 			<h2>About</h2>
-			<div>{value}</div>
-			<button onClick={() => setValue('About Page changed value')}>Change Value</button>
+			<pre>{JSON.stringify(user, null, 2)}</pre>
 		</div>
 	)
 }
