@@ -1,12 +1,20 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const App = () => {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data));
   };
+
+  const validateUserName = async (value) => {
+    await sleep(1000);
+    if (value === 'test') return true;
+    return false;
+  }
 
   return (
     <form className='App' onSubmit={handleSubmit(onSubmit)}>
@@ -34,7 +42,7 @@ const App = () => {
       </select>
 
       <label>Username</label>
-      <input name='username' ref={register({ required: true })} />
+      <input name='username' ref={register({ required: true, validate: validateUserName })} />
       {errors.username &&
         <p>This is required</p>
       }
