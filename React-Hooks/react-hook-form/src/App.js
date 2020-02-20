@@ -20,12 +20,15 @@ const App = () => {
     <form className='App' onSubmit={handleSubmit(onSubmit)}>
       <h1>Sign Up</h1>
       <label>First Name:</label>
-      <input name='firstName' ref={register({ required: true, minLength: 2 })} />
+      <input name='firstName' ref={register({ required: true, minLength: 2, pattern: /^[A-Za-z]+$/i })} />
       {errors.firstName && errors.firstName.type === 'required' &&
         <p>This is required</p>
       }
       {errors.firstName && errors.firstName.type === 'minLength' &&
         <p>This field required min length of 2</p>
+      }
+      {errors.firstName && errors.firstName.type === 'pattern' &&
+        <p>Please enter only letters</p>
       }
 
       <label>Last Name:</label>
