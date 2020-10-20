@@ -7,7 +7,7 @@ export const ACTION_TYPES = {
 	FETCH_ALL: 'FETCH_ALL'
 }
 
-export const fetchAll = () => {
+export const fetchAll = () => (dispatch) => {
 	api.dCandidate()
 		.then(response => {
 			// get API req
