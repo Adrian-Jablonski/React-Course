@@ -4,7 +4,7 @@ const baseUrl = 'http://localhost:59329/api/';
 
 
 export default {
-	dCandidate(url = baseUrl + 'dcandidate/') {
+	dCandidate(url = baseUrl + 'dcandidates/') {
 		return {
 			fetchAll: () => axios.get(url),
 			fetchByIdL: (id) => axios.get(url + id),
