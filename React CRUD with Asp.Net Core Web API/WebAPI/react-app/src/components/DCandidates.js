@@ -17,6 +17,11 @@ const styles = theme => ({
 	}
 })
 
+// https://dev.to/maxbvrn/react-props-auto-complete-in-vs-code-2ana
+/**
+ * DCandidate component
+ * @augments {Component<Props, State>}
+ */
 const DCandidate = ({ classes, dCandidateList, fetchAllDCandidates }) => {
 	useEffect(() => {
 		fetchAllDCandidates();
@@ -25,7 +30,9 @@ const DCandidate = ({ classes, dCandidateList, fetchAllDCandidates }) => {
 		<Paper className={classes.paper} elevation={3}>
 			<Grid container>
 				<Grid item xs={6}>
-					<DCandidateForm />
+					<DCandidateForm
+						
+					/>
 				</Grid>
 				<Grid item xs={6}>
 					<TableContainer>
