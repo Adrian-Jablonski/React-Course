@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
-import { Grid, TextField } from '@material-ui/core';
+import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField, withStyles } from '@material-ui/core';
 import useForm from './useForm';
+
+const styles = theme => ({
+	root: {
+		'& .MuiTextField-root': {
+			margin: theme.spacing(1),
+			minWidth: 200
+		}
+	},
+	formControl: {
+		margin: theme.spacing(1),
+		minWidth: 200
+	},
+	smMargin: {
+		margin: theme.spacing(1)
+	}
+})
 
 const initialFieldValues = {
 	fullName: '',
@@ -11,20 +27,44 @@ const initialFieldValues = {
 	address: ''
 }
 
+const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+
 // https://dev.to/maxbvrn/react-props-auto-complete-in-vs-code-2ana
 /**
  * DCandidateForm to add to database
  * @augments {Component<Props, State>}
  */
-const DCandidateForm = () => {
+const DCandidateForm = ({ classes }) => {
 	const {
 		values,
 		setValues,
-		handleInputChange
+		handleInputChange,
+		errors,
+		setErrors
 	} = useForm(initialFieldValues);
 
+	const validate = () => {
+		let temp = {};
+		temp.fullName = values.fullName ? "" : "This field is required";
+		temp.mobile = values.mobile ? "" : "This field is required";
+		temp.bloodGroup = values.bloodGroup ? "" : "This field is required";
+		temp.email = (/^$|.+@.+..+/).test(values.email) ? "" : "Email is not valid."
+		setErrors({
+			...temp
+		})
+		return Object.values(temp).every(x => x === ""); // Checks if every value in object is empty
+	}
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		if (validate()) {
+			window.alert("Validation succeeded")
+		}
+		console.log(values);
+	}
+
 	return (
-		<form autoComplete="off" noValidate>
+		<form autoComplete="off" noValidate className={classes.root}>
 			<Grid container>
 				<Grid item xs={6}>
 					<TextField
@@ -33,6 +73,8 @@ const DCandidateForm = () => {
 						label="Full Name"
 						value={values.fullName}
 						onChange={handleInputChange}
+						// Conditionally added props into component
+						{...(errors.fullName && {error: true, helperText: errors.fullName })}
 					/>
 					<TextField
 						name="email"
@@ -40,8 +82,32 @@ const DCandidateForm = () => {
 						label="Email"
 						value={values.email}
 						onChange={handleInputChange}
+						{...(errors.email && {error: true, helperText: errors.email })}
 					/>
-					<div>bloodGroup</div>
+					<FormControl variant="outlined"
+						className={classes.formControl}
+						{...(errors.bloodGroup && {error: true })}
+					>
+						<InputLabel>Blood Group</InputLabel>
+						<Select
+							name="bloodGroup"
+							value={values.bloodGroup}
+							onChange={handleInputChange}
+						>
+							<MenuItem value="">Select Blood Group</MenuItem>
+							{bloodGroups.map((bloodGroup) => (
+								<MenuItem
+									key={bloodGroup}
+									value={bloodGroup}
+								>
+									{bloodGroup}
+								</MenuItem>
+							)
+							)}
+
+						</Select>
+						{errors.bloodGroup && <FormHelperText>{errors.bloodGroup}</FormHelperText>}
+					</FormControl>
 				</Grid>
 				<Grid item xs={6}>
 					<TextField
@@ -50,6 +116,7 @@ const DCandidateForm = () => {
 						label="Mobile"
 						value={values.mobile}
 						onChange={handleInputChange}
+						{...(errors.mobile && {error: true, helperText: errors.mobile })}
 					/>
 					<TextField
 						name="age"
@@ -65,10 +132,26 @@ const DCandidateForm = () => {
 						value={values.address}
 						onChange={handleInputChange}
 					/>
+					<div>
+						<Button
+							className={classes.smMargin}
+							variant="contained"
+							color="primary"
+							onClick={handleSubmit}
+						>
+							Submit
+						</Button>
+						<Button
+							className={classes.smMargin}
+							variant="contained"
+						>
+							Reset
+						</Button>
+					</div>
 				</Grid>
 			</Grid>
 		</form>
 	);
 }
 
-export default DCandidateForm;
+export default withStyles(styles)(DCandidateForm);

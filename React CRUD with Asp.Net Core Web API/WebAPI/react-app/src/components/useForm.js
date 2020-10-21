@@ -5,8 +5,9 @@ import React, { useState, useEffect } from 'react';
  * @augments {Component<Props, State>}
  * @returns values, setValues, handleInputChange
  */
-const useForm = (initialFieldValues) => {
+const useForm = (initialFieldValues, validate = true) => {
 	const [values, setValues] = useState(initialFieldValues);
+	const [errors, setErrors] = useState({});
 
 	const handleInputChange = e => {
 		const { name, value } = e.target;
@@ -15,11 +16,14 @@ const useForm = (initialFieldValues) => {
 			[name]: value
 		})
 	}
-	return (
+
+	return {
 		values,
 		setValues,
-		handleInputChange
-	);
+		handleInputChange,
+		errors,
+		setErrors
+	};
 }
 
 export default useForm;
