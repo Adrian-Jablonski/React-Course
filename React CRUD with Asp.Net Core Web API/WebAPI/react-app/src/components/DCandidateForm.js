@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, TextField } from '@material-ui/core';
+import useForm from './useForm';
 
 const initialFieldValues = {
 	fullName: '',
@@ -16,15 +17,12 @@ const initialFieldValues = {
  * @augments {Component<Props, State>}
  */
 const DCandidateForm = () => {
-	const [values, setValues] = useState(initialFieldValues);
+	const {
+		values,
+		setValues,
+		handleInputChange
+	} = useForm(initialFieldValues);
 
-	const handleInputChange = e => {
-		const { name, value } = e.target;
-		setValues({
-			...values,
-			[name]: value
-		})
-	}
 	return (
 		<form autoComplete="off" noValidate>
 			<Grid container>
