@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField, withStyles } from '@material-ui/core';
 import useForm from './useForm';
+import * as actions from "../actions/dCandidate";
+import { connect } from 'react-redux';
 
 const styles = theme => ({
 	root: {
@@ -34,7 +36,7 @@ const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
  * DCandidateForm to add to database
  * @augments {Component<Props, State>}
  */
-const DCandidateForm = ({ classes }) => {
+const DCandidateForm = ({ classes, dCandidateList, createDCandidate, updateDCandidate, currentId }) => {
 	const {
 		values,
 		setValues,
@@ -58,10 +60,27 @@ const DCandidateForm = ({ classes }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 		if (validate()) {
-			window.alert("Validation succeeded")
+			if (currentId === 0) {
+				createDCandidate(values, () => {
+					window.alert('inserted');
+				})
+			} else {
+				updateDCandidate(currentId, values, () => {
+					window.alert('updated');
+				})
+			}
+			
 		}
 		console.log(values);
 	}
+
+	useEffect(() => {
+		if (currentId !== 0) {
+			setValues({
+				...dCandidateList.find((x) => x.id === currentId)
+			})
+		}
+	}, [currentId])
 
 	return (
 		<form autoComplete="off" noValidate className={classes.root}>
@@ -154,4 +173,16 @@ const DCandidateForm = ({ classes }) => {
 	);
 }
 
-export default withStyles(styles)(DCandidateForm);
+
+const mapStateToProps = state => {
+	return {
+		dCandidateList: state.dCandidate.list
+	}
+}
+
+const mapActionToProps = {
+	createDCandidate: actions.create,
+	updateDCandidate: actions.update
+}
+
+export default connect(mapStateToProps, mapActionToProps)(withStyles(styles)(DCandidateForm));

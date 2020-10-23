@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, withStyles } from '@material-ui/core';
+import { Button, ButtonGroup, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, withStyles } from '@material-ui/core';
 import { connect } from "react-redux";
 import * as actions from "../actions/dCandidate";
 import DCandidateForm from './DCandidateForm';
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
 	root: {
@@ -23,6 +25,8 @@ const styles = theme => ({
  * @augments {Component<Props, State>}
  */
 const DCandidate = ({ classes, dCandidateList, fetchAllDCandidates }) => {
+	const [currentId, setCurrentId] = useState(0);
+
 	useEffect(() => {
 		fetchAllDCandidates();
 	}, [])
@@ -31,7 +35,8 @@ const DCandidate = ({ classes, dCandidateList, fetchAllDCandidates }) => {
 			<Grid container>
 				<Grid item xs={6}>
 					<DCandidateForm
-						
+						// Equivalent to writing currentId={currentId} setCurrentId={setCurrentId}
+						{...({currentId, setCurrentId})}
 					/>
 				</Grid>
 				<Grid item xs={6}>
@@ -42,6 +47,7 @@ const DCandidate = ({ classes, dCandidateList, fetchAllDCandidates }) => {
 									<TableCell>Name</TableCell>
 									<TableCell>Mobile</TableCell>
 									<TableCell>Blood Group</TableCell>
+									<TableCell></TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -51,6 +57,21 @@ const DCandidate = ({ classes, dCandidateList, fetchAllDCandidates }) => {
 											<TableCell>{record.fullName}</TableCell>
 											<TableCell>{record.mobile}</TableCell>
 											<TableCell>{record.bloodGroup}</TableCell>
+											<TableCell>
+												<ButtonGroup variant="text">
+													<Button>
+														<EditIcon 
+															color="primary"
+															onClick={() => {
+																setCurrentId(record.id);
+															}}
+														/>
+													</Button>
+													<Button>
+														<DeleteIcon color="secondary" />
+													</Button>
+												</ButtonGroup>
+											</TableCell>
 										</TableRow>
 									)
 								})}
