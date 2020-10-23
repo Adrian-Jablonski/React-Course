@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
  * @augments {Component<Props, State>}
  * @returns values, setValues, handleInputChange
  */
-const useForm = (initialFieldValues, validate = true) => {
+const useForm = (initialFieldValues, setCurrentId) => {
 	const [values, setValues] = useState(initialFieldValues);
 	const [errors, setErrors] = useState({});
 
@@ -17,12 +17,21 @@ const useForm = (initialFieldValues, validate = true) => {
 		})
 	}
 
+	const resetForm = () => {
+		setValues({
+			initialFieldValues
+		})
+		setErrors({});
+		setCurrentId(0);
+	}
+
 	return {
 		values,
 		setValues,
 		handleInputChange,
 		errors,
-		setErrors
+		setErrors,
+		resetForm
 	};
 }
 

@@ -3,6 +3,7 @@ import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select
 import useForm from './useForm';
 import * as actions from "../actions/dCandidate";
 import { connect } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
 
 const styles = theme => ({
 	root: {
@@ -36,14 +37,16 @@ const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
  * DCandidateForm to add to database
  * @augments {Component<Props, State>}
  */
-const DCandidateForm = ({ classes, dCandidateList, createDCandidate, updateDCandidate, currentId }) => {
+const DCandidateForm = ({ classes, dCandidateList, createDCandidate, updateDCandidate, currentId, setCurrentId }) => {
+	const { addToast } = useToasts();
 	const {
 		values,
 		setValues,
 		handleInputChange,
 		errors,
-		setErrors
-	} = useForm(initialFieldValues);
+		setErrors,
+		resetForm
+	} = useForm(initialFieldValues, setCurrentId);
 
 	const validate = () => {
 		let temp = {};
@@ -60,18 +63,16 @@ const DCandidateForm = ({ classes, dCandidateList, createDCandidate, updateDCand
 	const handleSubmit = e => {
 		e.preventDefault();
 		if (validate()) {
-			if (currentId === 0) {
-				createDCandidate(values, () => {
-					window.alert('inserted');
-				})
-			} else {
-				updateDCandidate(currentId, values, () => {
-					window.alert('updated');
-				})
+			const onSuccess = () => {
+				addToast('Submitted successfully', {appearance: 'success'});
+				resetForm();
 			}
-			
+			if (currentId === 0) {
+				createDCandidate(values, onSuccess)
+			} else {
+				updateDCandidate(currentId, values, onSuccess)
+			}
 		}
-		console.log(values);
 	}
 
 	useEffect(() => {
@@ -163,6 +164,7 @@ const DCandidateForm = ({ classes, dCandidateList, createDCandidate, updateDCand
 						<Button
 							className={classes.smMargin}
 							variant="contained"
+							onClick={resetForm}
 						>
 							Reset
 						</Button>
