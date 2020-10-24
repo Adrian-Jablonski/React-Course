@@ -4,8 +4,7 @@ import Header from '../component/header';
 import { findByTestAttr } from '../../Utils';
 
 const setUp = (props={}) => {
-	const component = shallow(<Header {...props} />);
-	return component;
+	return shallow(<Header {...props} />);
 }
 
 describe('Header Component', () => {
