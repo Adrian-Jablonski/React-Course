@@ -1,0 +1,26 @@
+header {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0 10px;
+	text-align: center;
+	background: black;
+	.wrap {
+		display: block;
+		width: 100%;
+		margin: 0 auto;
+		max-width:  980px;
+
+		.logo {
+			display: block;
+			width: 120px;
+		
+			img {
+				display: block;
+				width: 100%;
+				margin: 0;
+			}
+		}
+	}
+}
+
