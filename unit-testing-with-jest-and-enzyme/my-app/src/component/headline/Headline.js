@@ -1,4 +1,5 @@
 import React from 'react';
+import { string } from 'prop-types';
 
 const Headline = ({ header, desc }) => {
 	if (!header) {
@@ -10,6 +11,11 @@ const Headline = ({ header, desc }) => {
 			<p data-test="description">{desc}</p>
 		</div>
 	)
+}
+
+Headline.propTypes = {
+	header: string,
+	desc: string
 }
 
 export default Headline;
